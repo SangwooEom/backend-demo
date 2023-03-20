@@ -5,6 +5,8 @@ import java.util.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class Member {
@@ -19,9 +21,11 @@ public class Member {
 	private String name;
 	
 	@Column(name = "CREATE_DATE")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
 	
 	@Column(name = "UPDATE_DATE")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
 
 	public String getUserId() {
