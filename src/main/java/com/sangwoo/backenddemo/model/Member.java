@@ -2,29 +2,33 @@ package com.sangwoo.backenddemo.model;
 
 import java.util.Date;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
+@Table(name = "member")
 public class Member {
 	@Id
-	@Column(name = "USER_ID")
+	@Column(name = "user_id")
 	private String userId;
 	
-	@Column(name = "PASSWORD")
+	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "NAME")
+	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "CREATE_DATE")
+	@Column(name = "create_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
 	
-	@Column(name = "UPDATE_DATE")
+	@Column(name = "update_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
 
