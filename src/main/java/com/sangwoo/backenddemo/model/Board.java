@@ -2,6 +2,8 @@ package com.sangwoo.backenddemo.model;
 
 import java.util.Date;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,6 +40,9 @@ public class Board {
 	@Column(name = "UPDATE_DATE")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
+	
+	@Column(name = "DEL_YN")
+	private 
 
 	public long getSeq() {
 		return seq;

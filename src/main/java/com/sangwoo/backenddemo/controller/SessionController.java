@@ -5,35 +5,38 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.sangwoo.backenddemo.dto.LoginDto;
 import com.sangwoo.backenddemo.dto.TokenDto;
-import com.sangwoo.backenddemo.service.AuthService;
+import com.sangwoo.backenddemo.service.SessionService;
+import com.sangwoo.backenddemo.service.UserService;
 
 @RestController
-@RequestMapping("auth")
-public class AuthController {
-	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+public class SessionController {
+	private static final Logger logger = LoggerFactory.getLogger(SessionController.class);
 	@Autowired
-	private AuthService authService;
+	private SessionService sessionService;
 	
-	@PostMapping("login")
+	@Autowired
+	private UserService userService;
+	
+	@PostMapping("session")
 	public TokenDto login(@RequestBody LoginDto loginDto) {
 		String id = loginDto.getId();
-		String password = authService.hashSHA512(loginDto.getPassword());
+		String password = sessionService.hashSHA512(loginDto.getPassword());
 		
-		if (!authService.checkLogin(id, password)) {
+		if (!userService.validateUser(id, password)) {
 			logger.error("비밀번호가 틀렸습니다.");
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인이 실패하였습니다.");
 		}
 		
-		String accessToken = authService.createAccessToken(id);
-		String refreshToken = authService.createRefreshToken(id);
+		String accessToken = sessionService.createAccessToken(id);
+		String refreshToken = sessionService.createRefreshToken(id);
 		
 		TokenDto tokenDto = new TokenDto();
 		
@@ -43,10 +46,10 @@ public class AuthController {
 		return tokenDto;
 	}
 	
-	@PostMapping("reissue")
+	@PutMapping("session")
 	public TokenDto reissue(@RequestHeader("Authorization") String refreshToken) {
-		String id = authService.getIdByToken(refreshToken);
-		String accessToken = authService.createAccessToken(id);
+		String id = sessionService.getIdByToken(refreshToken);
+		String accessToken = sessionService.createAccessToken(id);
 		
 		TokenDto tokenDto = new TokenDto();
 		
@@ -55,7 +58,4 @@ public class AuthController {
 		
 		return tokenDto;
 	}
-	
-	@PostMapping("join")
-	public 
 }

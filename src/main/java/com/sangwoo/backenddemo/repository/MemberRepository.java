@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import com.sangwoo.backenddemo.model.Member;
 
 public interface MemberRepository extends CrudRepository<Member, String> {
-	
+	public boolean existsByUserIdAndPassword(String userId, String password);
 }
