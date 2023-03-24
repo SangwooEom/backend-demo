@@ -29,4 +29,9 @@ public class UserServiceImpl implements UserService {
 	public boolean existsUserId(String UserId) {
 		return memberRepository.existsById(UserId);
 	}
+	
+	@Override
+	public Member getMemberByUserId(String userId) {
+		return memberRepository.findById(userId).orElse(null);
+	}
 }

@@ -8,4 +8,6 @@ public interface UserService {
 	public boolean validateUser(String userId, String password);
 	
 	public boolean existsUserId(String userId);
+	
+	public Member getMemberByUserId(String userId);
 }

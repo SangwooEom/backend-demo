@@ -2,10 +2,12 @@ package com.sangwoo.backenddemo.model;
 
 import java.util.Date;
 
-import org.hibernate.annotations.DynamicUpdate;
+import com.sangwoo.backenddemo.type.YNType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,7 +44,8 @@ public class Board {
 	private Date updateDate;
 	
 	@Column(name = "DEL_YN")
-	private 
+	@Enumerated(EnumType.STRING)
+	private YNType deleteYn;
 
 	public long getSeq() {
 		return seq;
@@ -90,5 +93,13 @@ public class Board {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public YNType getDeleteYn() {
+		return deleteYn;
+	}
+
+	public void setDeleteYn(YNType deleteYn) {
+		this.deleteYn = deleteYn;
 	}
 }
